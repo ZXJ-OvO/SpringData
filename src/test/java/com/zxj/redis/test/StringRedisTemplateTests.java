@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.util.Map;
+
 /**
  * fastjson2参考：https://alibaba.github.io/fastjson2/
  */
@@ -54,6 +56,19 @@ public class StringRedisTemplateTests {
         User user2 = JSON.parseObject(jsonUser2, User.class);
 
         System.out.println("user2 = " + user2);
+    }
+
+    /**
+     * 测试哈希数据序列化与反序列化
+     */
+    @Test
+    void testHash(){
+        stringRedisTemplate.opsForHash().put("user:300","name","刘备");
+        stringRedisTemplate.opsForHash().put("user:300","age","18");
+
+        // entries()方法返回指定key的所有键值对
+        Map<Object, Object> entries = stringRedisTemplate.opsForHash().entries("user:300");
+        System.out.println("entries = " + entries);
     }
 
 }
