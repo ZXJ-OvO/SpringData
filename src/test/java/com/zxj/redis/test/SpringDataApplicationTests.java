@@ -30,7 +30,6 @@ class SpringDataApplicationTests {
      */
     @Test
     void testString() {
-        System.out.println(redisTemplate.toString());
 
         // 写入一条String类型数据
         redisTemplate.opsForValue().set("name", "庞涓");
@@ -41,7 +40,9 @@ class SpringDataApplicationTests {
     }
 
     /**
-     * 测试Java对象数据
+     * 测试Java对象数据  对象的序列化与反序列化存在严重的性能问题
+     * 序列化Java对象时，还会带上对象的字节码文件，反序列化时根据字节码文件反序列化得到对象
+     * 使用StringRedisTemplate进行序列化，要求key和value都是String类型
      */
     @Test
     void testObject() {
